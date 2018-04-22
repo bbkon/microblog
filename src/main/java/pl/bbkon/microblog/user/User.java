@@ -2,6 +2,7 @@ package pl.bbkon.microblog.user;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,7 +30,7 @@ public class User implements UserDetails {
     private String username;
 
     @Column(nullable = false)
-    @Size(min = 4, max = 30, message = "Password must be at least 4 characters long")
+    @Size(min = 4, max = 100, message = "Password must be at least 4 characters long")
     private String password;
 
     @Email(message = "Incorrect email format")
@@ -46,11 +47,16 @@ public class User implements UserDetails {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.ALL)
     private List<Role> authorities;
 
     @Column(nullable = false)
     private Status status;
+
+    @Tolerate
+    public User() {
+        // needed by Hibernate
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -72,7 +78,7 @@ public class User implements UserDetails {
         return !status.equals(Status.INACTIVE);
     }
 
-    enum Status {
+    public enum Status {
         ACTIVE,
         INACTIVE,
         BANNED

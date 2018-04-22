@@ -2,6 +2,7 @@ package pl.bbkon.microblog.role;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Data
 @Table(name = "roles")
 @Entity
+@NoArgsConstructor
 public class Role implements GrantedAuthority {
 
     @Id
@@ -25,10 +27,5 @@ public class Role implements GrantedAuthority {
     @Override
     public String toString() {
         return authority;
-    }
-
-    enum RoleEnum {
-        USER,
-        ADMIN
     }
 }

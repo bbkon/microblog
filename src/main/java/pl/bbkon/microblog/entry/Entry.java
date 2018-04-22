@@ -1,6 +1,7 @@
 package pl.bbkon.microblog.entry;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import pl.bbkon.microblog.user.User;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "entries")
+@NoArgsConstructor
 public class Entry {
 
     @Id
