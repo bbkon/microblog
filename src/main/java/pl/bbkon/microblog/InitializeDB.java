@@ -27,6 +27,14 @@ public class InitializeDB {
                 .status(User.Status.ACTIVE)
                 .logo("logo")
                 .authorities(Collections.singletonList(new Role(RoleEnum.USER)))
-                .description("no description").build());
+                .description("no description")
+                .build());
     }
+
+//    @PostConstruct
+//    public void createEntriesWithComments() {
+//        List<Comment> comments = new ArrayList<>();
+//        comments.add()
+//    }
+
 }

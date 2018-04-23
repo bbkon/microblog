@@ -1,25 +1,25 @@
-package pl.bbkon.microblog.entry;
+package pl.bbkon.microblog.comment;
+
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import pl.bbkon.microblog.comment.Comment;
+import pl.bbkon.microblog.entry.Entry;
 import pl.bbkon.microblog.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "entries")
+@Table(name = "comments")
 @NoArgsConstructor
-public class Entry {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "entry_id")
+    @Column(name = "comment_id")
     private Integer id;
 
     @Column(nullable = false)
@@ -37,11 +37,13 @@ public class Entry {
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
 
-    @OneToMany(mappedBy = "entry")
-    private List<Comment> comments;
+    @ManyToOne
+    @JoinColumn(name = "entry_id", nullable = false)
+    private Entry entry;
 
     enum Status {
         ORIGINAL,
         EDITED
     }
+
 }
