@@ -1,5 +1,6 @@
 package pl.bbkon.microblog.entry;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "entries")
 @NoArgsConstructor
+@Builder
 public class Entry {
 
     @Id
@@ -40,7 +42,7 @@ public class Entry {
     @OneToMany(mappedBy = "entry")
     private List<Comment> comments;
 
-    enum Status {
+    public enum Status {
         ORIGINAL,
         EDITED
     }
