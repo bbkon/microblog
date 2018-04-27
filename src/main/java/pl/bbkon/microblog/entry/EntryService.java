@@ -2,6 +2,8 @@ package pl.bbkon.microblog.entry;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.bbkon.microblog.user.User;
+import pl.bbkon.microblog.user.UserService;
 
 import java.util.List;
 
@@ -9,8 +11,14 @@ import java.util.List;
 @AllArgsConstructor
 public class EntryService {
     private EntryRepository entryRepository;
+    private UserService userService;
 
     public List<Entry> findAll() {
-        return entryRepository.findAll();
+        return entryRepository.findAllByOrderByCreationDateDesc();
+    }
+
+    public List<Entry> findAllByAuthor(String username) {
+        User user = (User) userService.loadUserByUsername(username);
+        return entryRepository.findAllByAuthorOrderByCreationDateDesc(user);
     }
 }

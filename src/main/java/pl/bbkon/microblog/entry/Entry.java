@@ -1,5 +1,7 @@
 package pl.bbkon.microblog.entry;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +17,9 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "entries")
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Entry {
 
     @Id
@@ -37,6 +40,7 @@ public class Entry {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User author;
 
     @OneToMany(mappedBy = "entry")
@@ -45,5 +49,9 @@ public class Entry {
     public enum Status {
         ORIGINAL,
         EDITED
+    }
+
+    public String getAuthorName() {
+        return author.getUsername();
     }
 }

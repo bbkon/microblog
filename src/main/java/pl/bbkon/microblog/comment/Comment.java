@@ -1,6 +1,8 @@
 package pl.bbkon.microblog.comment;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,7 +16,9 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "comments")
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
 
     @Id

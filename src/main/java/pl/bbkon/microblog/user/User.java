@@ -1,8 +1,9 @@
 package pl.bbkon.microblog.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.Tolerate;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,6 +20,8 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -53,11 +56,6 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private Status status;
-
-    @Tolerate
-    public User() {
-        // needed by Hibernate
-    }
 
     @Override
     public boolean isAccountNonExpired() {

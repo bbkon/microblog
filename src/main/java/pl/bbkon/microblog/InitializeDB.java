@@ -25,33 +25,54 @@ public class InitializeDB {
     private PasswordEncoder encoder;
 
     @PostConstruct
-    public void createUsers() {
-        userRepo.save(User.builder()
+    public void fillUpDB() {
+        createUsers();
+        createEntries();
+    }
+
+    private void createUsers() {
+        userRepo.save(createAdmin());
+        userRepo.save(createUser());
+    }
+
+    private User createAdmin() {
+        return User.builder()
                 .username("admin")
                 .password(encoder.encode("admin"))
                 .email("admin@admin.o2.pl")
                 .status(User.Status.ACTIVE)
                 .logo("logo")
-                .authorities(Collections.singletonList(new Role(RoleEnum.USER)))
+                .authorities(Collections.singletonList(new Role(RoleEnum.ADMIN)))
                 .description("no description")
-                .build());
+                .build();
     }
 
-    @PostConstruct
-    public void createEntries() {
+    private User createUser() {
+        return User.builder()
+                .username("user")
+                .password(encoder.encode("password"))
+                .email("user@o2.pl")
+                .status(User.Status.ACTIVE)
+                .logo("logo")
+                .authorities(Collections.singletonList(new Role(RoleEnum.USER)))
+                .description("some description")
+                .build();
+    }
+
+    private void createEntries() {
         List<String> contentsList = createListOfContents();
 
-        for (int i = 0; i < 20; i++) {
-            int num = generateRandomNumber(contentsList.size());
+        for (int i = 0; i < 40; i++) {
+            int num = getRandomNumber(contentsList.size());
             entryRepository.save(Entry.builder()
-                    .author(userRepo.getOne(1))
+                    .author(userRepo.getOne(i % 2 + 1))
                     .contents(contentsList.get(num))
                     .status(Entry.Status.ORIGINAL)
                     .comments(Collections.emptyList()).build());
         }
     }
 
-    private int generateRandomNumber(int bound) {
+    private int getRandomNumber(int bound) {
         Random r = new Random();
         return r.nextInt(bound);
     }
