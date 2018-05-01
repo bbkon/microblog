@@ -62,7 +62,7 @@ public class InitializeDB {
     private void createEntries() {
         List<String> contentsList = createListOfContents();
 
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 100; i++) {
             int num = getRandomNumber(contentsList.size());
             entryRepository.save(Entry.builder()
                     .author(userRepo.getOne(i % 2 + 1))
