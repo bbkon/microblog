@@ -13,7 +13,7 @@ $(function () {
                 $row.find(".entry-author").text(entry.authorName);
                 $row.find(".entry-contents").text(entry.contents);
 
-                $("#wall").append($row);
+                $(".wall").append($row);
 
             }
 
