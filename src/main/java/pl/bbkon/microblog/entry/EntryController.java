@@ -30,4 +30,9 @@ public class EntryController {
         return ResponseEntity.ok(entryService.findAllByAuthor(username));
     }
 
+    @GetMapping("/unauth/number")
+    public ResponseEntity<Integer> getNumberOfEntries() {
+        return ResponseEntity.ok(entryService.findAll().size());
+    }
+
 }
