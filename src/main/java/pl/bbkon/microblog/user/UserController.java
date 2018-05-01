@@ -1,5 +1,6 @@
 package pl.bbkon.microblog.user;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/auth/login")
-    public boolean login() {
-        return true;
+    public ResponseEntity login() {
+        return ResponseEntity.accepted().build();
     }
 }
