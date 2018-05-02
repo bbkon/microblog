@@ -37,6 +37,7 @@ public class User implements UserDetails {
     @Size(min = 4, max = 100, message = "Password must be at least 4 characters long")
     private String password;
 
+    @Column(nullable = false)
     @Email(message = "Incorrect email format")
     private String email;
 

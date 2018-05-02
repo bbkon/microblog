@@ -18,7 +18,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "role_id")
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String authority;
 
     public Role(RoleEnum authority) {
