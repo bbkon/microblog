@@ -1,6 +1,7 @@
 package pl.bbkon.microblog.entry;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,8 @@ import java.util.List;
 public class EntryController {
     private EntryService entryService;
 
-//    @GetMapping("/unauth/entries")
-//    public List<Entry> findAll() {
-//        return entryService.findAll();
-//    }
-
     @GetMapping("/unauth/entries")
-    public ResponseEntity<List<Entry>> findAll(@PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<Page<Entry>> findAll(@PageableDefault(size = 20) Pageable pageable) {
         return ResponseEntity.ok(entryService.findAll(pageable));
     }
 
@@ -29,10 +25,4 @@ public class EntryController {
     public ResponseEntity<List<Entry>> findAllByUser(@PathVariable("username") String username) {
         return ResponseEntity.ok(entryService.findAllByAuthor(username));
     }
-
-    @GetMapping("/unauth/number")
-    public ResponseEntity<Integer> getNumberOfEntries() {
-        return ResponseEntity.ok(entryService.findAll().size());
-    }
-
 }

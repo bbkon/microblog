@@ -1,6 +1,7 @@
 package pl.bbkon.microblog.entry;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.bbkon.microblog.user.User;
@@ -18,7 +19,7 @@ public class EntryService {
         return entryRepository.findAllByOrderByCreationDateDesc();
     }
 
-    public List<Entry> findAll(Pageable pageable) {
+    public Page<Entry> findAll(Pageable pageable) {
         return entryRepository.findAllByOrderByCreationDateDesc(pageable);
     }
 
