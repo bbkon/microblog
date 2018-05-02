@@ -5,9 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,10 @@ public class EntryController {
     @GetMapping("/unauth/{username}/entries")
     public ResponseEntity<List<Entry>> findAllByUser(@PathVariable("username") String username) {
         return ResponseEntity.ok(entryService.findAllByAuthor(username));
+    }
+
+    @PostMapping("/auth/entry")
+    public ResponseEntity<Entry> addEntry(@RequestBody CreateEntryRequest request) {
+        return ResponseEntity.ok(entryService.add(request));
     }
 }

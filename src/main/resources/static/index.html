@@ -43,17 +43,33 @@
 &nbsp;&nbsp;
 
 <div class="container">
+
+    <div class="form-group">
+        <form class="new-entry">
+
+            <label for="new-entry-form"><h5>Write what you have in mind</h5></label>
+            <textarea class="form-control" id="new-entry-form" rows="3"></textarea>
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary right mt-2" id="submit-entry-button">
+                    Submit
+                </button>
+            </div>
+        </form>
+        <hr>
+    </div>
+
     <div class="wall-template">
         <div class="row d-none" id="entry-template">
             <div class="col-1 entry-author"></div>
             <div class="col-11 entry-contents"></div>
             <hr>
         </div>
+
     </div>
     <div class="wall">
     </div>
 
-
+    <div class="pagination-div">
         <ul class="pagination justify-content-center">
             <li class="page-item">
                 <a class="page-link" href="#" id="previous-button" tabindex="-1">Previous</a>
@@ -63,6 +79,7 @@
                 <a class="page-link " href="#">Next</a>
             </li>
         </ul>
+    </div>
 </div>
 
 
