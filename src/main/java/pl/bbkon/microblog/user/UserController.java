@@ -1,6 +1,7 @@
 package pl.bbkon.microblog.user;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +32,12 @@ public class UserController {
 
     @PostMapping("/auth/login")
     public ResponseEntity login() {
-        return ResponseEntity.accepted().build();
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/auth/login")
+    public ResponseEntity checkLogin() {
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = "/unauth/register")

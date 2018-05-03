@@ -16,10 +16,6 @@ public class EntryService {
     private EntryRepository entryRepository;
     private UserService userService;
 
-    public List<Entry> findAll() {
-        return entryRepository.findAllByOrderByCreationDateDesc();
-    }
-
     public Page<Entry> findAll(Pageable pageable) {
         return entryRepository.findAllByOrderByCreationDateDesc(pageable);
     }
