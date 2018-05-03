@@ -6,7 +6,6 @@ $(function () {
 
 $("#submit-entry-button").click(function (xhr) {
     var contents = $("#new-entry-form").val();
-    var username = "user";
 
     var createEntryRequest = {
         contents: contents,
