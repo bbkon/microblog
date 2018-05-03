@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
@@ -38,6 +39,11 @@ public class UserController {
     @GetMapping("/auth/login")
     public ResponseEntity checkLogin() {
         return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/auth/service/username")
+    public ResponseEntity<String> getUsername(Principal principal) {
+        return new ResponseEntity<>(principal.getName(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/unauth/register")
