@@ -77,13 +77,13 @@ public class InitializeDB {
                     .build());
         }
 
-        for (int i = 0; i < 101; i++) {
+        for (int i = 0; i < 1000; i++) {
             int num = getRandomNumber(commentContentsList.size());
             commentRepository.save(Comment.builder()
                     .author(userRepository.getOne(i % 2 + 1))
                     .contents(commentContentsList.get(num))
                     .status(Comment.Status.ORIGINAL)
-                    .entry(entryRepository.getOne(1))
+                    .entry(entryRepository.getOne(i / 10))
                     .build());
         }
 

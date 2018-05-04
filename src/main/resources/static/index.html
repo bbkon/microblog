@@ -8,7 +8,6 @@
           integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css"
           integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
-
     <title>Microblog</title>
 </head>
 <body class="bg-light">
@@ -65,16 +64,33 @@
     </div>
 
     <div class="wall-template">
-        <div class="row d-none bg-white my-2" id="entry-template">
+        <div class="row d-none bg-white my-2 container" id="entry-template">
             <div class="col-1 entry-author text-primary font-weight-bold"></div>
             <div class="col-11 entry-main-panel">
                 <div class="row entry-date small text-muted"></div>
                 <div class="row entry-contents"></div>
-            </div>
-            <hr>
-        </div>
 
+                <div class="row entry-comment-template">
+                    <div class="col-12">
+                        <div class="row d-none bg-white my-2" id="comment-template">
+
+                            <div class="col-1 comment-author text-primary font-weight-bold"></div>
+                            <div class="col-11 comment-main-panel">
+                                <div class="row comment-date small text-muted"></div>
+                                <div class="row comment-contents"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row more-comments-link d-none justify-content-center">
+                    <a href="#" class="btn btn-outline-primary btn-sm mb-2">Load more...</a>
+                </div>
+            </div>
+
+        </div>
     </div>
+
     <div class="wall">
     </div>
 

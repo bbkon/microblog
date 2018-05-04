@@ -38,12 +38,46 @@ function getPage(number) {
                 var $row = $entryTemplate.clone();
                 $row.removeAttr("id")
                     .removeClass("d-none");
+                $row.attr("id", "entry" + entry.id);
+
                 var date = new Date(entry.creationDate);
                 $row.find(".entry-date").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
                 $row.find(".entry-author").text(entry.authorName);
                 $row.find(".entry-contents").text(entry.contents);
 
-                console.log(date.toLocaleTimeString());   // -> 02/28/2004
+                var $commentTemplate = $("#comment-template");
+
+                for (var j = 0; j < entry.comments.length; j++) {
+                    var comment = entry.comments[j];
+                    var $commentRow = $commentTemplate.clone();
+                    $commentRow.removeAttr("id");
+                    if (j < 2) {
+                        $commentRow.removeClass("d-none");
+                    }
+                    if (entry.comments.length > 7) {
+                        $row.find(".more-comments-link").attr("id", entry.id);
+                        // $row.find(".more-comments-link").attr("id", "load-more" + entry.id);
+                        $row.find(".more-comments-link").click(function () {
+                            var id = "entry" + $(this).attr("id");
+                            var petla = $('#' + id).find(".d-none");
+                            console.log(petla);
+                            for (var t = 0; t < petla.length; t++) {
+                                console.log(petla[t]);
+                                $(petla[t]).removeClass("d-none");
+                            }
+
+
+                        })
+                        $(".more-comments-link").removeClass("d-none");
+
+                    }
+                    var commentDate = new Date(comment.creationDate);
+                    $commentRow.find(".comment-date").text(commentDate.toLocaleDateString() + " " + commentDate.toLocaleTimeString());
+                    $commentRow.find(".comment-author").text(comment.authorName);
+                    $commentRow.find(".comment-contents").text(comment.contents);
+
+                    $row.find(".entry-comment-template").find(".col-12").append($commentRow);
+                }
 
 
                 $(".wall").append($row);
