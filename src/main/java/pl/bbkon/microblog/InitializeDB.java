@@ -3,6 +3,8 @@ package pl.bbkon.microblog;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import pl.bbkon.microblog.comment.Comment;
+import pl.bbkon.microblog.comment.CommentRepository;
 import pl.bbkon.microblog.entry.Entry;
 import pl.bbkon.microblog.entry.EntryRepository;
 import pl.bbkon.microblog.role.Role;
@@ -20,7 +22,8 @@ import java.util.Random;
 @AllArgsConstructor
 public class InitializeDB {
 
-    private UserRepository userRepo;
+    private UserRepository userRepository;
+    private CommentRepository commentRepository;
     private EntryRepository entryRepository;
     private PasswordEncoder encoder;
 
@@ -31,8 +34,8 @@ public class InitializeDB {
     }
 
     private void createUsers() {
-        userRepo.save(createAdmin());
-        userRepo.save(createUser());
+        userRepository.save(createAdmin());
+        userRepository.save(createUser());
     }
 
     private User createAdmin() {
@@ -60,16 +63,43 @@ public class InitializeDB {
     }
 
     private void createEntries() {
-        List<String> contentsList = createListOfContents();
+        List<String> entryContentsList = createListOfEntryContents();
+        List<String> commentContentsList = createListOfCommentContents();
+        List<Comment> comments = new ArrayList<>();
+        List<Entry> entries = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
-            int num = getRandomNumber(contentsList.size());
+            int num = getRandomNumber(entryContentsList.size());
             entryRepository.save(Entry.builder()
-                    .author(userRepo.getOne(i % 2 + 1))
-                    .contents(contentsList.get(num))
+                    .author(userRepository.getOne(i % 2 + 1))
+                    .contents(entryContentsList.get(num))
                     .status(Entry.Status.ORIGINAL)
-                    .comments(Collections.emptyList()).build());
+                    .build());
         }
+
+        for (int i = 0; i < 101; i++) {
+            int num = getRandomNumber(commentContentsList.size());
+            commentRepository.save(Comment.builder()
+                    .author(userRepository.getOne(i % 2 + 1))
+                    .contents(commentContentsList.get(num))
+                    .status(Comment.Status.ORIGINAL)
+                    .entry(entryRepository.getOne(1))
+                    .build());
+        }
+
+
+    }
+
+    private List<String> createListOfCommentContents() {
+        List<String> contentsList = new ArrayList<>();
+        contentsList.add("Zwariowany Marcin prowadzi 12 H live na, którym 3zł = 3 min dłużej. Serio ?");
+        contentsList.add("Odwołałem się do filmu przysięga małżeńska. Naciągnąłem trochę pod temat ale może nie zauważą xD");
+        contentsList.add("Ja się odwołałem do pierwszej części Dziadów i do Botoksu Patryka Vegi, ujdzie?");
+        contentsList.add("Niby taki piąteczek, a jednak poniedziałek. Za raz usnę, a jeszcze 3h ");
+        contentsList.add("Widzę, że u #rafatus po staremu - kolejna próba wyjścia na prostą i kolejny raz to samo. Ale to przecież wina Marleny, to ona miała na niego zły wpływ... ");
+        contentsList.add("Pierwszy win w nowym sezonie, o tak ");
+        contentsList.add("Wybiera się ktoś z Mirków na Trzy Korony w sobotę? (05.05)");
+        return contentsList;
     }
 
     private int getRandomNumber(int bound) {
@@ -77,7 +107,7 @@ public class InitializeDB {
         return r.nextInt(bound);
     }
 
-    private List<String> createListOfContents() {
+    private List<String> createListOfEntryContents() {
         List<String> contentsList = new ArrayList<>();
         contentsList.add("film do obejrzenia z dziewczyną, najlepiej romantyczny");
         contentsList.add("Wyczuwam dobry materiał na gównoburzę");

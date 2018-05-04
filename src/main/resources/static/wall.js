@@ -16,8 +16,9 @@ $("#submit-entry-button").click(function (xhr) {
         url: "auth/entry",
         data: JSON.stringify(createEntryRequest),
         contentType: "application/json; charset=utf-8",
-        success: function (response) {
-            window.location.href = "index.html"
+        success: function () {
+            getPage(0);
+            $("#new-entry-form").val("");
         }
     });
     return false;

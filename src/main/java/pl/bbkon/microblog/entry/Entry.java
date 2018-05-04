@@ -43,7 +43,7 @@ public class Entry {
     @JsonIgnore
     private User author;
 
-    @OneToMany(mappedBy = "entry")
+    @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     public enum Status {

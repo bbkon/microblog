@@ -28,7 +28,7 @@ function getPage(number) {
     $.get({
         url: "/unauth/entries?page=" + number,
         success: function (response) {
-
+            console.log(response);
             var $entryTemplate = $("#entry-template");
             currentPage = number;
 
@@ -38,9 +38,12 @@ function getPage(number) {
                 var $row = $entryTemplate.clone();
                 $row.removeAttr("id")
                     .removeClass("d-none");
-
+                var date = new Date(entry.creationDate);
+                $row.find(".entry-date").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
                 $row.find(".entry-author").text(entry.authorName);
                 $row.find(".entry-contents").text(entry.contents);
+
+                console.log(date.toLocaleTimeString());   // -> 02/28/2004
 
 
                 $(".wall").append($row);

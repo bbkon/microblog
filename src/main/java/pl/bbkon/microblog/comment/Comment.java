@@ -1,6 +1,7 @@
 package pl.bbkon.microblog.comment;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,13 +40,19 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User author;
 
     @ManyToOne
     @JoinColumn(name = "entry_id", nullable = false)
+    @JsonIgnore
     private Entry entry;
 
-    enum Status {
+    public String getAuthorName() {
+        return author.getUsername();
+    }
+
+    public enum Status {
         ORIGINAL,
         EDITED
     }

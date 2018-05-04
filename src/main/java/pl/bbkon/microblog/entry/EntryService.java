@@ -17,7 +17,8 @@ public class EntryService {
     private UserService userService;
 
     public Page<Entry> findAll(Pageable pageable) {
-        return entryRepository.findAllByOrderByCreationDateDesc(pageable);
+        Page<Entry> entries = entryRepository.findAllByOrderByCreationDateDesc(pageable);
+        return entries;
     }
 
     public List<Entry> findAllByAuthor(String username) {
