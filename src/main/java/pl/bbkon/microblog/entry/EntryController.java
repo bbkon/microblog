@@ -16,16 +16,7 @@ public class EntryController {
 
     @GetMapping("/unauth/entries")
     public ResponseEntity<Page<Entry>> findAll(@PageableDefault(size = 20) Pageable pageable) {
-        Page<Entry> serviceAll = entryService.findAll(pageable);
-//        serviceAll.forEach(res -> {
-//            List<Comment> comments = res.getComments();
-//            if (!comments.equals(null)) {
-//                comments.forEach(res2 -> res2.setEntry(null));
-//                res.setComments(comments);
-//            }
-//        });
-
-        return ResponseEntity.ok(serviceAll);
+        return ResponseEntity.ok(entryService.findAll(pageable));
     }
 
     @GetMapping("/unauth/{username}/entries")

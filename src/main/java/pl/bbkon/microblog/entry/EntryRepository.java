@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public interface EntryRepository extends JpaRepository<Entry, Integer> {
 
-    Page<Entry> findAllByOrderByCreationDateDesc(Pageable pageable);
-    List<Entry> findAllByOrderByCreationDateDesc();
+    Page<Entry> findAllByOrderByCreationDateAsc(Pageable pageable);
 
-    List<Entry> findAllByAuthorOrderByCreationDateDesc(User user);
+    List<Entry> findAllByAuthorOrderByCreationDateAsc(User user);
 }

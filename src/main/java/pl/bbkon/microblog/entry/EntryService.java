@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.bbkon.microblog.comment.Comment;
 import pl.bbkon.microblog.user.User;
 import pl.bbkon.microblog.user.UserService;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -17,13 +19,15 @@ public class EntryService {
     private UserService userService;
 
     public Page<Entry> findAll(Pageable pageable) {
-        Page<Entry> entries = entryRepository.findAllByOrderByCreationDateDesc(pageable);
+        Page<Entry> entries = entryRepository.findAllByOrderByCreationDateAsc(pageable);
+        entries.forEach(entry -> entry.getComments().sort(Comparator.comparing(Comment::getCreationDate)));
+
         return entries;
     }
 
     public List<Entry> findAllByAuthor(String username) {
         User user = (User) userService.loadUserByUsername(username);
-        return entryRepository.findAllByAuthorOrderByCreationDateDesc(user);
+        return entryRepository.findAllByAuthorOrderByCreationDateAsc(user);
     }
 
     public Entry add(CreateEntryRequest request) {

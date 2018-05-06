@@ -5,7 +5,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Data
 @Validated
-public class CreateEntryRequest {
+class CreateEntryRequest {
 
     private String username;
     private String contents;
