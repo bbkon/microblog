@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.bbkon.microblog.comment.Comment;
+import pl.bbkon.microblog.comment.CommentRepository;
 import pl.bbkon.microblog.user.User;
 import pl.bbkon.microblog.user.UserService;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EntryService {
     private EntryRepository entryRepository;
+    private CommentRepository commentRepository;
     private UserService userService;
 
     public Page<Entry> findAll(Pageable pageable) {
@@ -38,5 +40,9 @@ public class EntryService {
                 .status(Entry.Status.ORIGINAL)
                 .build();
         return entryRepository.save(entry);
+    }
+
+    public Entry getOne(Integer id) {
+        return entryRepository.getOne(id);
     }
 }
