@@ -4,7 +4,7 @@ $(function () {
     }
 });
 
-$("#submit-entry-button").click(function (xhr) {
+$("#submit-entry-button").click(function () {
     var contents = $("#new-entry-form").val();
 
     var createEntryRequest = {

@@ -4,7 +4,7 @@ function checkAuthenticationStatus() {
     $.get({
         url: "/auth/login",
         success: function () {
-            getLoggedInUsername();
+            greetLoggedInUser();
             $("#login-menu-item").hide();
         },
         error: function () {
@@ -23,7 +23,7 @@ $("#login-button").click(function () {
             xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
         },
         success: function () {
-            getLoggedInUsername();
+            greetLoggedInUser();
             $("#login-menu-item").hide();
             $("#logout-menu-item").show();
         },
@@ -50,7 +50,7 @@ $("#logout-button").click(function () {
     });
 });
 
-function getLoggedInUsername() {
+function greetLoggedInUser() {
     $.get({
         url: "/auth/service/username",
         success: function (response) {
