@@ -51,9 +51,8 @@
 
     <div class="form-group">
         <form class="new-entry">
-
             <label for="new-entry-form"><h5>Write what you have in mind</h5></label>
-            <textarea class="form-control" id="new-entry-form" rows="3"></textarea>
+            <textarea class="form-control" id="new-entry-form" rows="5"></textarea>
             <div class="text-right">
                 <button type="submit" class="btn btn-primary right mt-2" id="submit-entry-button">
                     Submit
@@ -82,12 +81,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-end mx-2">
+                    <a href="#" class="show-response-form">Respond</a>
+                </div>
+
                 <hr>
+                <div class="form-group response-div d-none">
+                    <form class="new-comment">
+                        <label for="new-comment-form"><h6>Write your comment</h6></label>
+                        <textarea class="form-control" id="new-comment-form" rows="3"></textarea>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary right mt-2 submit-comment-button"
+                                    id="submit-comment-button">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                    <hr>
+                </div>
                 <div class="row more-comments-link d-none justify-content-center">
                     <a href="#" class="btn btn-outline-primary btn-sm mb-2">Load more...</a>
                 </div>
             </div>
-
         </div>
     </div>
 

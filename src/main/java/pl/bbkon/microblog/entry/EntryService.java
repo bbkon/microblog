@@ -21,7 +21,7 @@ public class EntryService {
     private UserService userService;
 
     public Page<Entry> findAll(Pageable pageable) {
-        Page<Entry> entries = entryRepository.findAllByOrderByCreationDateAsc(pageable);
+        Page<Entry> entries = entryRepository.findAllByOrderByCreationDateDesc(pageable);
         entries.forEach(entry -> entry.getComments().sort(Comparator.comparing(Comment::getCreationDate)));
 
         return entries;
@@ -29,7 +29,7 @@ public class EntryService {
 
     public List<Entry> findAllByAuthor(String username) {
         User user = (User) userService.loadUserByUsername(username);
-        return entryRepository.findAllByAuthorOrderByCreationDateAsc(user);
+        return entryRepository.findAllByAuthorOrderByCreationDateDesc(user);
     }
 
     public Entry add(CreateEntryRequest request) {
