@@ -13,8 +13,7 @@ function fillPaginationList() {
                 }
                 placeNextButton();
             }
-        }
-    );
+    });
 }
 
 function preparePageButton($pageTemplate, i) {
@@ -35,7 +34,6 @@ function getPage(number) {
             var $entryTemplate = $("#entry-template");
             currentPage = number;
 
-            $("#pageNumber").html(currentPage + 1);
             for (var i = 0; i < response.content.length; i++) {
                 var entry = response.content[i];
                 var $row = $entryTemplate.clone();
@@ -44,42 +42,11 @@ function getPage(number) {
                 $row.attr("id", entry.id);
 
                 var date = new Date(entry.creationDate);
-                $row.find(".entry-date").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
+                $row.find(".entry-details").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
                 $row.find(".entry-author").text(entry.authorName);
                 $row.find(".entry-contents").text(entry.contents);
-                $row.find(".response-div").find(".form-control").attr("id", "new-comment-form" + entry.id);
-                $row.find(".response-div").find("#submit-comment-button").attr("id", "submit-comment-button-" + entry.id);
-                $row.find(".response-div").attr("id", "response-div" + entry.id);
-                $row.find(".show-response-form").attr("id", "usunac" + entry.id);
-                $row.find(".show-response-form").click(function () {
-                    var id = $(this).attr("id");
-                    $("#response-div" + id).removeClass("d-none");
-                    return false;
-                });
 
                 var $commentTemplate = $("#comment-template");
-
-                $row.find(".submit-comment-button").click(function () {
-                    var id = $(this).attr("id");
-                    var res = id.split("-");
-                    var idNumber = res[res.length - 1];
-                    var path = "/auth/" + idNumber + "/comment";
-
-                    var createCommentRequest = {
-                        username: username,
-                        contents: $("#new-comment-form" + idNumber).val()
-                    };
-                    $.post({
-                        url: path,
-                        data: JSON.stringify(createCommentRequest),
-                        contentType: "application/json; charset=utf-8",
-                        success: function () {
-                            $("#new-comment-form" + idNumber).val("");
-                        }
-                    });
-                    $("#response-div" + id).removeClass("d-none");
-                    return false;
-                });
 
                 for (var j = 0; j < entry.comments.length; j++) {
                     var comment = entry.comments[j];
@@ -90,7 +57,7 @@ function getPage(number) {
                     }
 
                     var commentDate = new Date(comment.creationDate);
-                    $commentRow.find(".comment-date").text(commentDate.toLocaleDateString() + " " + commentDate.toLocaleTimeString());
+                    $commentRow.find(".comment-details").text(commentDate.toLocaleDateString() + " " + commentDate.toLocaleTimeString());
                     $commentRow.find(".comment-author").text(comment.authorName);
                     $commentRow.find(".comment-contents").text(comment.contents);
 
@@ -98,6 +65,8 @@ function getPage(number) {
                 }
                 $(".wall").append($row);
                 prepareLoadMoreCommentsButton(entry.id);
+                prepareSubmitCommentButon(entry.id);
+                showNewCommentFormLink(entry.id);
             }
             placePreviousButton();
             placeNextButton();
@@ -106,14 +75,46 @@ function getPage(number) {
     return false;
 }
 
+function showNewCommentFormLink(entryId) {
+    var $currentEntry = $("#" + entryId);
+    var $showCommentFormLink = $currentEntry.find(".show-response-form");
+    $showCommentFormLink.click(function () {
+        $currentEntry.find(".response-div").removeClass("d-none");
+        return false;
+    });
+
+}
+
 function prepareLoadMoreCommentsButton(entryId) {
-    console.log("funkcja wywolana dla entry nr: " + entryId);
-    var $moreCommentsButton = $("#" + entryId).find(".more-comments-link");
+    var $currentEntry = $("#" + entryId);
+    var $moreCommentsButton = $currentEntry.find(".more-comments-link");
     $moreCommentsButton.removeClass("d-none");
     $moreCommentsButton.click(function () {
-        $("#" + entryId).find(".comment").removeClass("d-none");
+        $currentEntry.find(".comment").removeClass("d-none");
     });
     return false;
+}
+
+function prepareSubmitCommentButon(entryId) {
+    var $currentEntry = $("#" + entryId);
+    var $submitCommentButton = $currentEntry.find(".submit-comment-button");
+
+    $submitCommentButton.click(function () {
+        var createCommentRequest = {
+            username: username,
+            contents: $currentEntry.find(".comment-text").val()
+        };
+
+        $.post({
+            url: "/auth/" + entryId + "/comment",
+            data: JSON.stringify(createCommentRequest),
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+                $currentEntry.find(".comment-text").val("");
+            }
+        });
+        return false;
+    });
 }
 
 function placePreviousButton() {

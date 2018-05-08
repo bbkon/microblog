@@ -59,7 +59,7 @@
         <div class="row d-none bg-white my-2 container" id="entry-template">
             <div class="col-1 entry-author text-primary font-weight-bold"></div>
             <div class="col-11 entry-main-panel">
-                <div class="row entry-date small text-muted"></div>
+                <div class="row entry-details small text-muted"></div>
                 <div class="row entry-contents"></div>
 
                 <div class="row entry-comment-template">
@@ -68,7 +68,7 @@
 
                             <div class="col-1 comment-author text-primary font-weight-bold"></div>
                             <div class="col-11 comment-main-panel">
-                                <div class="row comment-date small text-muted"></div>
+                                <div class="row comment-details small text-muted"></div>
                                 <div class="row comment-contents"></div>
                             </div>
                         </div>
@@ -81,11 +81,10 @@
                 <hr>
                 <div class="form-group response-div d-none">
                     <form class="new-comment">
-                        <label for="new-comment-form"><h6>Write your comment</h6></label>
-                        <textarea class="form-control" id="new-comment-form" rows="3"></textarea>
+                        <label><h6>Write your comment</h6></label>
+                        <textarea class="form-control comment-text" rows="3"></textarea>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary right mt-2 submit-comment-button"
-                                    id="submit-comment-button">
+                            <button type="submit" class="btn btn-primary right mt-2 submit-comment-button">
                                 Submit
                             </button>
                         </div>
@@ -93,7 +92,7 @@
                     <hr>
                 </div>
                 <div class="row more-comments-link d-none justify-content-center">
-                    <a href="#" class="btn btn-outline-primary btn-sm mb-2">Load more...</a>
+                    <button class="btn btn-outline-primary btn-sm mb-2">Load more...</button>
                 </div>
             </div>
         </div>
