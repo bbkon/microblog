@@ -5,10 +5,10 @@ function checkAuthenticationStatus() {
         url: "/auth/login",
         success: function () {
             greetLoggedInUser();
-            $("#login-menu-item").hide();
+            showMenuForLoggedInUser();
         },
         error: function () {
-            $("#logout-menu-item").hide();
+            showMenuForNotLoggedIn();
         }
     });
 }
@@ -23,9 +23,7 @@ $("#login-button").click(function () {
             xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
         },
         success: function () {
-            greetLoggedInUser();
-            $("#login-menu-item").hide();
-            $("#logout-menu-item").show();
+            showMenuForLoggedInUser();
         },
         error: function () {
             alert("Invalid credentials!");
@@ -44,8 +42,7 @@ $("#logout-button").click(function () {
             alert("Invalid credentials!");
         },
         error: function () {
-            $("#login-menu-item").show();
-            $("#logout-menu-item").hide();
+            showMenuForNotLoggedIn();
         }
     });
 });
@@ -59,6 +56,21 @@ function greetLoggedInUser() {
             return response;
         }
     })
+}
+
+function showMenuForLoggedInUser() {
+    greetLoggedInUser();
+    $("#login-menu-item").hide();
+    $("#logout-menu-item").show();
+    $("#register-nav-link").hide();
+    $("#your-profile-nav-link").show();
+}
+
+function showMenuForNotLoggedIn() {
+    $("#login-menu-item").show();
+    $("#logout-menu-item").hide();
+    $("#register-nav-link").show();
+    $("#your-profile-nav-link").hide();
 }
 
 checkAuthenticationStatus();

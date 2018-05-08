@@ -50,4 +50,9 @@ public class UserController {
     public ResponseEntity<User> register(@RequestBody @Valid CreatePersonRequest request) {
         return ResponseEntity.ok(userService.create(request));
     }
+
+    @GetMapping("/auth/profile")
+    public ResponseEntity<User> viewYourOwnProfile(Principal principal) {
+        return new ResponseEntity<>((User) userService.loadUserByUsername(principal.getName()), HttpStatus.OK);
+    }
 }

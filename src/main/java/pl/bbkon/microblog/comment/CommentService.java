@@ -11,7 +11,7 @@ import pl.bbkon.microblog.user.UserService;
 public class CommentService {
 
     private CommentRepository commentRepository;
-    ;
+
     private UserService userService;
     private EntryService entryService;
 
@@ -23,5 +23,9 @@ public class CommentService {
                 .entry(entryService.getOne(entryId))
                 .build();
         commentRepository.save(comment);
+    }
+
+    public Integer countAllByAuthorId(Integer authorId) {
+        return commentRepository.countAllByAuthorId(authorId);
     }
 }
