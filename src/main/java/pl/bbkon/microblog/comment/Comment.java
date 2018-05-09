@@ -28,7 +28,7 @@ public class Comment {
     private Integer id;
 
     @Column(nullable = false)
-    @Size(min = 3, max = 200)
+    @Size(min = 3, max = 5000)
     private String contents;
 
     @CreationTimestamp

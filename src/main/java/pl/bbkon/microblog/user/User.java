@@ -1,5 +1,6 @@
 package pl.bbkon.microblog.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,12 +36,14 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     @Size(min = 4, max = 100, message = "Password must be at least 4 characters long")
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
     @Email(message = "Incorrect email format")
     private String email;
 
+    @Size(max = 2000)
     private String description;
     private String logo;
 

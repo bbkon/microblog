@@ -8,31 +8,24 @@ function loadProfileData() {
     console.log(url);
     console.log(username);
     if (username == null) {
-        $.get({
-            url: "/auth/profile",
-            success: function (user) {
-            },
-            error: function () {
-                console.log("Failed to get user data.");
-            },
-            complete: function (user) {
-                fillUpData(user);
-            }
-        });
+        loadSpecificProfile("/auth/profile");
     } else {
-        $.get({
-            url: "/auth/" + username + "/profile",
-            success: function (user) {
-            },
-            error: function () {
-                console.log("Failed to get user data.");
-            },
-            complete: function (user) {
-                fillUpData(user);
-            }
-        });
+        loadSpecificProfile("/auth/" + username + "/profile");
     }
+}
 
+function loadSpecificProfile(getUrl) {
+    $.get({
+        url: getUrl,
+        success: function (user) {
+        },
+        error: function () {
+            console.log("Failed to get user data.");
+        },
+        complete: function (user) {
+            fillUpData(user);
+        }
+    });
 }
 
 function fillUpData(user) {

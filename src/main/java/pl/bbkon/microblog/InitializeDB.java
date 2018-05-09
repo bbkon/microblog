@@ -27,6 +27,8 @@ public class InitializeDB {
     private EntryRepository entryRepository;
     private PasswordEncoder encoder;
 
+    private static final String DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam convallis molestie augue vel porttitor. Suspendisse bibendum vel justo vel mollis. Suspendisse faucibus ex nisi, in tincidunt odio tristique vitae. Proin consequat dapibus congue. Aenean nec gravida dui. Praesent sed scelerisque risus. Suspendisse potenti. Nulla venenatis neque non lorem finibus faucibus. Sed mi sapien, elementum quis est non, viverra malesuada quam. Ut convallis ipsum eu arcu luctus egestas. Aenean eget est convallis, efficitur felis vitae, molestie ex. Mauris molestie sem ac consectetur pulvinar. Phasellus ligula est, pretium in neque et, bibendum bibendum enim. Aliquam tincidunt lacus felis, et consequat eros suscipit ac.";
+
     @PostConstruct
     public void fillUpDB() {
         createUsers();
@@ -46,7 +48,7 @@ public class InitializeDB {
                 .status(User.Status.ACTIVE)
                 .logo("logo")
                 .authorities(Collections.singletonList(new Role(RoleEnum.ADMIN)))
-                .description("no description")
+                .description(DESCRIPTION)
                 .build();
     }
 
@@ -58,15 +60,13 @@ public class InitializeDB {
                 .status(User.Status.ACTIVE)
                 .logo("logo")
                 .authorities(Collections.singletonList(new Role(RoleEnum.USER)))
-                .description("some description")
+                .description(DESCRIPTION)
                 .build();
     }
 
     private void createEntries() {
         List<String> entryContentsList = createListOfEntryContents();
         List<String> commentContentsList = createListOfCommentContents();
-        List<Comment> comments = new ArrayList<>();
-        List<Entry> entries = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
             int num = getRandomNumber(entryContentsList.size());

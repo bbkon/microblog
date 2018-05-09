@@ -60,7 +60,7 @@ function getPage(number) {
                     var commentDate = new Date(comment.creationDate);
                     $commentRow.find(".comment-details").text(commentDate.toLocaleDateString() + " " + commentDate.toLocaleTimeString());
                     $commentRow.find(".comment-author").find(".user-profile-link").text(comment.authorName);
-                    $commentRow.find(".comment-author").find(".user-profile-link").attr("href", "/profile.html?user=" + entry.authorName);
+                    $commentRow.find(".comment-author").find(".user-profile-link").attr("href", "/profile.html?user=" + comment.authorName);
                     $commentRow.find(".comment-contents").text(comment.contents);
 
                     $row.find(".entry-comment-template").find(".col-12").append($commentRow);
