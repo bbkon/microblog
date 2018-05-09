@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -52,7 +49,12 @@ public class UserController {
     }
 
     @GetMapping("/auth/profile")
-    public ResponseEntity<User> viewYourOwnProfile(Principal principal) {
+    public ResponseEntity<User> viewLoggedInProfile(Principal principal) {
         return new ResponseEntity<>((User) userService.loadUserByUsername(principal.getName()), HttpStatus.OK);
+    }
+
+    @GetMapping("/auth/{username}/profile")
+    public ResponseEntity<User> viewOtherUserProfile(@PathVariable("username") String username) {
+        return new ResponseEntity<>((User) userService.loadUserByUsername(username), HttpStatus.OK);
     }
 }

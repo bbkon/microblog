@@ -15,17 +15,21 @@ public class CommentService {
     private UserService userService;
     private EntryService entryService;
 
-    public void addComment(Integer entryId, CreateCommentRequest request) {
+    public Comment addComment(Integer entryId, CreateCommentRequest request) {
         Comment comment = Comment.builder()
                 .contents(request.getContents())
                 .author((User) userService.loadUserByUsername(request.getUsername()))
                 .status(Comment.Status.ORIGINAL)
                 .entry(entryService.getOne(entryId))
                 .build();
-        commentRepository.save(comment);
+        return commentRepository.save(comment);
     }
 
     public Integer countAllByAuthorId(Integer authorId) {
         return commentRepository.countAllByAuthorId(authorId);
+    }
+
+    public Integer countAllByAuthorUsername(String username) {
+        return commentRepository.countAllByAuthorUsername(username);
     }
 }

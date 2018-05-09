@@ -3,16 +3,16 @@ var totalPages = 0;
 
 function fillPaginationList() {
     $.get({
-            url: "/unauth/entries",
-            success: function (response) {
-                var $pageTemplate = $("#page-template");
-                totalPages = response.totalPages;
-                for (var i = 0; i < totalPages; i++) {
-                    var $pageButton = preparePageButton($pageTemplate, i);
-                    $(".pagination").append($pageButton);
-                }
-                placeNextButton();
+        url: "/unauth/entries",
+        success: function (response) {
+            var $pageTemplate = $("#page-template");
+            totalPages = response.totalPages;
+            for (var i = 0; i < totalPages; i++) {
+                var $pageButton = preparePageButton($pageTemplate, i);
+                $(".pagination").append($pageButton);
             }
+            placeNextButton();
+        }
     });
 }
 
@@ -43,7 +43,8 @@ function getPage(number) {
 
                 var date = new Date(entry.creationDate);
                 $row.find(".entry-details").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
-                $row.find(".entry-author").text(entry.authorName);
+                $row.find(".entry-author").find(".user-profile-link").text(entry.authorName);
+                $row.find(".entry-author").find(".user-profile-link").attr("href", "/profile.html?user=" + entry.authorName);
                 $row.find(".entry-contents").text(entry.contents);
 
                 var $commentTemplate = $("#comment-template");
@@ -58,7 +59,8 @@ function getPage(number) {
 
                     var commentDate = new Date(comment.creationDate);
                     $commentRow.find(".comment-details").text(commentDate.toLocaleDateString() + " " + commentDate.toLocaleTimeString());
-                    $commentRow.find(".comment-author").text(comment.authorName);
+                    $commentRow.find(".comment-author").find(".user-profile-link").text(comment.authorName);
+                    $commentRow.find(".comment-author").find(".user-profile-link").attr("href", "/profile.html?user=" + entry.authorName);
                     $commentRow.find(".comment-contents").text(comment.contents);
 
                     $row.find(".entry-comment-template").find(".col-12").append($commentRow);
@@ -109,7 +111,22 @@ function prepareSubmitCommentButon(entryId) {
             url: "/auth/" + entryId + "/comment",
             data: JSON.stringify(createCommentRequest),
             contentType: "application/json; charset=utf-8",
-            success: function () {
+            success: function (response) {
+
+                var $commentTemplate = $("#comment-template");
+                var $commentRow = $commentTemplate.clone();
+
+                $commentRow.removeAttr("id").removeClass("d-none");
+                var commentDate = new Date(response.creationDate);
+                $commentRow.find(".comment-details").text(commentDate.toLocaleDateString() + " " + commentDate.toLocaleTimeString());
+                console.log($commentRow.find(".comment-details"));
+                // $commentRow.find(".comment-author").text(response.authorName);
+                $commentRow.find(".comment-author").find(".user-profile-link").text(response.authorName);
+                $commentRow.find(".comment-author").find(".user-profile-link").attr("href", "/profile.html?user=" + response.authorName);
+
+                $commentRow.find(".comment-contents").text(response.contents);
+                $currentEntry.find(".entry-comment-template").find(".col-12").append($commentRow);
+
                 $currentEntry.find(".comment-text").val("");
             }
         });

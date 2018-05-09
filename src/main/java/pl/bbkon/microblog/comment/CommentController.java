@@ -12,13 +12,12 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/auth/{entryId}/comment")
-    public ResponseEntity addComment(@PathVariable("entryId") Integer entryId, @RequestBody CreateCommentRequest comment) {
-        commentService.addComment(entryId, comment);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+    public ResponseEntity<Comment> addComment(@PathVariable("entryId") Integer entryId, @RequestBody CreateCommentRequest comment) {
+        return new ResponseEntity<>(commentService.addComment(entryId, comment), HttpStatus.OK);
     }
 
-    @GetMapping("/auth/{userId}/commentsNumber")
-    public ResponseEntity<Integer> getCommentsNumber(@PathVariable("userId") Integer userId) {
-        return new ResponseEntity<>(commentService.countAllByAuthorId(userId), HttpStatus.OK);
+    @GetMapping("/auth/{username}/commentsNumber")
+    public ResponseEntity<Integer> getCommentsNumber(@PathVariable String username) {
+        return new ResponseEntity<>(commentService.countAllByAuthorUsername(username), HttpStatus.OK);
     }
 }

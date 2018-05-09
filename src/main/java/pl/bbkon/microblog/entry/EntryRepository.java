@@ -14,4 +14,7 @@ public interface EntryRepository extends JpaRepository<Entry, Integer> {
     Page<Entry> findAllByOrderByCreationDateDesc(Pageable pageable);
 
     List<Entry> findAllByAuthorOrderByCreationDateDesc(User user);
+
+    Integer countAllByAuthorUsername(String username);
+
 }

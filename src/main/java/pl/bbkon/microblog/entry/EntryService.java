@@ -45,4 +45,9 @@ public class EntryService {
     public Entry getOne(Integer id) {
         return entryRepository.getOne(id);
     }
+
+
+    public Integer countAllByAuthorUsername(String username) {
+        return entryRepository.countAllByAuthorUsername(username);
+    }
 }

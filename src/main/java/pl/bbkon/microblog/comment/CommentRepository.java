@@ -8,4 +8,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     Integer countAllByAuthorId(Integer authorId);
 
+    Integer countAllByAuthorUsername(String username);
+
 }

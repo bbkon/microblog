@@ -1,18 +1,38 @@
-var comments = 0;
+var url_string = window.location.href;
+var url = new URL(url_string);
+var username = url.searchParams.get("user");
+
 
 function loadProfileData() {
-    $.get({
-        url: "/auth/profile",
-        success: function (user) {
-        },
-        error: function () {
-            console.log("Failed to get user data.");
-        },
-        complete: function (user) {
-            fillUpData(user);
-        }
+    console.log(url_string);
+    console.log(url);
+    console.log(username);
+    if (username == null) {
+        $.get({
+            url: "/auth/profile",
+            success: function (user) {
+            },
+            error: function () {
+                console.log("Failed to get user data.");
+            },
+            complete: function (user) {
+                fillUpData(user);
+            }
+        });
+    } else {
+        $.get({
+            url: "/auth/" + username + "/profile",
+            success: function (user) {
+            },
+            error: function () {
+                console.log("Failed to get user data.");
+            },
+            complete: function (user) {
+                fillUpData(user);
+            }
+        });
+    }
 
-    });
 }
 
 function fillUpData(user) {
@@ -20,53 +40,32 @@ function fillUpData(user) {
     $(".user-description").text(user.responseJSON.description);
     var date = new Date(user.responseJSON.creationDate);
     $(".active-since").text("since " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
-    getCommentsNumberByAuthor(user.responseJSON.id).done(function (result) {
+    getCommentsNumberByAuthor(user.responseJSON.username).done(function (result) {
         $(".comments-added").text("comments added: " + result);
     });
+    getEntriesNumberByAuthor(user.responseJSON.username).done(function (result) {
+        $(".entries-created").text("entries created: " + result);
+    })
 }
 
-function getCommentsNumberByAuthor(userId) {
+function getCommentsNumberByAuthor(username) {
     return $.get({
-        url: "/auth/" + userId + "/commentsNumber",
+        url: "/auth/" + username + "/commentsNumber",
         success: function (response) {
-            comments = response;
         },
         error: function () {
-            comments = 0;
         }
     });
 }
 
-
-// var comments = 0;
-// $.get({
-//     url: "/auth/" + userId + "/commentsNumber",
-//     success: function (response) {
-//         comments = response;
-//     },
-//     error: function () {
-//         comments = 0;
-//     },
-//     complete: function () {
-//         return comments;
-//     }
-// });
-// }
-//
-//
-// function myAsyncFunction(url) {
-//     return new Promise((resolve, reject) = > {
-//         const xhr = new XMLHttpRequest();
-//     xhr.open("GET", url);
-//     xhr.onload = () =
-// >
-//     resolve(xhr.responseText);
-//     xhr.onerror = () =
-// >
-//     reject(xhr.statusText);
-//     xhr.send();
-// })
-//     ;
-// }
+function getEntriesNumberByAuthor(username) {
+    return $.get({
+        url: "/auth/" + username + "/entriesNumber",
+        success: function () {
+        },
+        error: function () {
+        }
+    });
+}
 
 loadProfileData();

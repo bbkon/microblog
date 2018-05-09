@@ -73,4 +73,11 @@ function showMenuForNotLoggedIn() {
     $("#your-profile-nav-link").hide();
 }
 
+$(".navbar").on("keypress", "#login-menu-item", function (args) {
+    if (args.keyCode == 13) {
+        $("#login-button").click();
+        return false;
+    }
+});
+
 checkAuthenticationStatus();
