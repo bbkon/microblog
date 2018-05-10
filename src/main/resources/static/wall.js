@@ -24,3 +24,4 @@ $("#submit-entry-button").click(function () {
     return false;
 });
 
+

@@ -5,19 +5,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.bbkon.microblog.comment.Comment;
-import pl.bbkon.microblog.comment.CommentRepository;
 import pl.bbkon.microblog.user.User;
 import pl.bbkon.microblog.user.UserService;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
 public class EntryService {
     private EntryRepository entryRepository;
-    private CommentRepository commentRepository;
     private UserService userService;
 
     public Page<Entry> findAll(Pageable pageable) {
@@ -46,8 +45,16 @@ public class EntryService {
         return entryRepository.getOne(id);
     }
 
-
     public Integer countAllByAuthorUsername(String username) {
         return entryRepository.countAllByAuthorUsername(username);
+    }
+
+    public Integer upvoteEntry(Integer entryId) {
+        Entry entry = entryRepository
+                .findById(entryId)
+                .orElseThrow(() -> new NoSuchElementException("Entry not found."));
+        entry.upvote();
+        entryRepository.save(entry);
+        return entry.getVotes();
     }
 }

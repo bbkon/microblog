@@ -47,6 +47,8 @@ function getPage(number) {
                 $row.find(".entry-author").find(".user-profile-link").attr("href", "/profile.html?user=" + entry.authorName);
                 $row.find(".entry-contents").text(entry.contents);
 
+                $row.find(".entry-votes-number").text(entry.votes);
+
                 var $commentTemplate = $("#comment-template");
 
                 for (var j = 0; j < entry.comments.length; j++) {
@@ -69,6 +71,7 @@ function getPage(number) {
                 prepareLoadMoreCommentsButton(entry.id);
                 prepareSubmitCommentButon(entry.id);
                 showNewCommentFormLink(entry.id);
+                prepareUpvoteEntryButton(entry.id);
             }
             placePreviousButton();
             placeNextButton();
@@ -76,6 +79,7 @@ function getPage(number) {
     });
     return false;
 }
+
 
 function showNewCommentFormLink(entryId) {
     var $currentEntry = $("#" + entryId);
@@ -85,6 +89,20 @@ function showNewCommentFormLink(entryId) {
         return false;
     });
 
+}
+
+function prepareUpvoteEntryButton(entryId) {
+    var $currentEntry = $("#" + entryId);
+    var $upvoteEntryButton = $currentEntry.find(".upvote-entry");
+    $upvoteEntryButton.click(function () {
+        $.get({
+            url: "/auth/entry/" + entryId + "/upvote",
+            success: function (response) {
+                $currentEntry.find(".entry-votes-number").text(response);
+            }
+        });
+        return false;
+    })
 }
 
 function prepareLoadMoreCommentsButton(entryId) {

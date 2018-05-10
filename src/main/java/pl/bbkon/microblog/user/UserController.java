@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/unauth/register")
-    public ResponseEntity<User> register(@RequestBody @Valid CreatePersonRequest request) {
+    public ResponseEntity<User> register(@RequestBody @Valid CreateUserRequest request) {
         return ResponseEntity.ok(userService.create(request));
     }
 

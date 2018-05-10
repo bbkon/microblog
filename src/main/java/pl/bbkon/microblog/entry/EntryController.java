@@ -34,4 +34,9 @@ public class EntryController {
     public ResponseEntity<Integer> getCommentsNumber(@PathVariable("username") String username) {
         return new ResponseEntity<>(entryService.countAllByAuthorUsername(username), HttpStatus.OK);
     }
+
+    @GetMapping("/auth/entry/{entryId}/upvote")
+    public ResponseEntity<Integer> upvoteEntry(@PathVariable("entryId") Integer entryId) {
+        return new ResponseEntity<>(entryService.upvoteEntry(entryId), HttpStatus.OK);
+    }
 }

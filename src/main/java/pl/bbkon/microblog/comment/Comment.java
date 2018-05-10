@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import pl.bbkon.microblog.entry.Entry;
+import pl.bbkon.microblog.entry.Votable;
 import pl.bbkon.microblog.user.User;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+public class Comment implements Votable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,8 +53,20 @@ public class Comment {
         return author.getUsername();
     }
 
+    private Integer votes;
+
     public enum Status {
         ORIGINAL,
         EDITED
+    }
+
+    @Override
+    public void upvote() {
+        votes++;
+    }
+
+    @Override
+    public void downvote() {
+        votes--;
     }
 }

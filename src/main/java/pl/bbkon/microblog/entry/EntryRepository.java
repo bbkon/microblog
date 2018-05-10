@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import pl.bbkon.microblog.user.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EntryRepository extends JpaRepository<Entry, Integer> {
@@ -17,4 +18,6 @@ public interface EntryRepository extends JpaRepository<Entry, Integer> {
 
     Integer countAllByAuthorUsername(String username);
 
+    @Override
+    Optional<Entry> findById(Integer integer);
 }

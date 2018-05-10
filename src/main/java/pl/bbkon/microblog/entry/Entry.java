@@ -20,7 +20,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Entry {
+public class Entry implements Votable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +46,9 @@ public class Entry {
     @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    @Builder.Default
+    private Integer votes = 0;
+
     public enum Status {
         ORIGINAL,
         EDITED
@@ -53,5 +56,15 @@ public class Entry {
 
     public String getAuthorName() {
         return author.getUsername();
+    }
+
+    @Override
+    public void upvote() {
+        votes++;
+    }
+
+    @Override
+    public void downvote() {
+        votes--;
     }
 }
