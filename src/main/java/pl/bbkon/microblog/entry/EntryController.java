@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class EntryController {
     }
 
     @GetMapping("/auth/entry/{entryId}/upvote")
-    public ResponseEntity<Integer> upvoteEntry(@PathVariable("entryId") Integer entryId) {
-        return new ResponseEntity<>(entryService.upvoteEntry(entryId), HttpStatus.OK);
+    public ResponseEntity<Integer> upvoteEntry(@PathVariable("entryId") Integer entryId, Principal principal) {
+        return new ResponseEntity<>(entryService.upvoteEntry(entryId, principal), HttpStatus.OK);
     }
 }

@@ -12,7 +12,9 @@ import pl.bbkon.microblog.user.User;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -47,7 +49,8 @@ public class Entry implements Votable {
     private List<Comment> comments;
 
     @Builder.Default
-    private Integer votes = 0;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<User> upvotingUsers = new HashSet<>();
 
     public enum Status {
         ORIGINAL,
@@ -58,13 +61,17 @@ public class Entry implements Votable {
         return author.getUsername();
     }
 
+    public Integer getVotes() {
+        return upvotingUsers.size();
+    }
+
     @Override
-    public void upvote() {
-        votes++;
+    public void upvote(User votingUser) {
+        upvotingUsers.add(votingUser);
     }
 
     @Override
     public void downvote() {
-        votes--;
+
     }
 }

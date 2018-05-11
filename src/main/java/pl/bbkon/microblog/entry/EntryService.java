@@ -8,6 +8,7 @@ import pl.bbkon.microblog.comment.Comment;
 import pl.bbkon.microblog.user.User;
 import pl.bbkon.microblog.user.UserService;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -49,11 +50,11 @@ public class EntryService {
         return entryRepository.countAllByAuthorUsername(username);
     }
 
-    public Integer upvoteEntry(Integer entryId) {
-        Entry entry = entryRepository
-                .findById(entryId)
+    public Integer upvoteEntry(Integer entryId, Principal principal) {
+        Entry entry = entryRepository.findById(entryId)
                 .orElseThrow(() -> new NoSuchElementException("Entry not found."));
-        entry.upvote();
+        User user = (User) userService.loadUserByUsername(principal.getName());
+        entry.upvote(user);
         entryRepository.save(entry);
         return entry.getVotes();
     }

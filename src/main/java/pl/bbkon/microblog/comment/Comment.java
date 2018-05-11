@@ -61,7 +61,7 @@ public class Comment implements Votable {
     }
 
     @Override
-    public void upvote() {
+    public void upvote(User user) {
         votes++;
     }
 
