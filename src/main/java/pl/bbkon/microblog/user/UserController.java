@@ -15,6 +15,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.security.Principal;
 
 @RestController
@@ -67,12 +68,13 @@ public class UserController {
 
     @PostMapping("/auth/avatar")
     public ResponseEntity uploadAvatar(@RequestParam("uploadfile") MultipartFile avatar) {
-        String filepath = request.getServletContext().getRealPath("/");
-        System.out.println(filepath);
+        String filename = avatar.getOriginalFilename();
+        String directory = "C:/Repositories/microblog/src/main/resources/static/avatars";
+        String filepath = Paths.get(directory, filename).toString();
+
         try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)))) {
             stream.write(avatar.getBytes());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.OK);
