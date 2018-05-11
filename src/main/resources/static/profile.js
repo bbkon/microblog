@@ -31,6 +31,8 @@ function loadSpecificProfile(getUrl) {
 function fillUpData(user) {
     $(".username").text(user.responseJSON.username);
     $(".user-description").text(user.responseJSON.description);
+    console.log(user.responseJSON);
+    $(".avatar-img").attr("src", user.responseJSON.logo);
     var date = new Date(user.responseJSON.creationDate);
     $(".active-since").text("since " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
     getCommentsNumberByAuthor(user.responseJSON.username).done(function (result) {
@@ -67,7 +69,6 @@ $(document).ready(function () {
 });
 
 function uploadFile() {
-    console.log("WLOZLECH");
     $.ajax({
         url: "/auth/avatar",
         type: "POST",
@@ -77,14 +78,13 @@ function uploadFile() {
         contentType: false,
         cache: false,
         success: function () {
-            // Handle upload success
             $("#upload-file-message").text("File succesfully uploaded");
+            location.reload();
         },
         error: function () {
-            // Handle upload error
             $("#upload-file-message").text(
                 "File not uploaded");
         }
     });
-} // function uploadFile
+}
 
