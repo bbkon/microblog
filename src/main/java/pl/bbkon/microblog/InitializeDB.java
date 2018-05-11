@@ -77,7 +77,7 @@ public class InitializeDB {
                     .build());
         }
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             int num = getRandomNumber(commentContentsList.size());
             commentRepository.save(Comment.builder()
                     .author(userRepository.getOne(i % 2 + 1))

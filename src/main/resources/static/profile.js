@@ -1,12 +1,12 @@
-var url_string = window.location.href;
-var url = new URL(url_string);
-var username = url.searchParams.get("user");
+// var url_string = window.location.href;
+// var url = new URL(url_string);
+// var username = url.searchParams.get("user");
 
 
 function loadProfileData() {
-    console.log(url_string);
-    console.log(url);
-    console.log(username);
+    // console.log(url_string);
+    // console.log(url);
+    // console.log(username);
     if (username == null) {
         loadSpecificProfile("/auth/profile");
     } else {
@@ -61,4 +61,30 @@ function getEntriesNumberByAuthor(username) {
     });
 }
 
-loadProfileData();
+$(document).ready(function () {
+    $("#upload-file-input").on("change", uploadFile);
+    loadProfileData();
+});
+
+function uploadFile() {
+    console.log("WLOZLECH");
+    $.ajax({
+        url: "/auth/avatar",
+        type: "POST",
+        data: new FormData($("#upload-file-form")[0]),
+        enctype: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function () {
+            // Handle upload success
+            $("#upload-file-message").text("File succesfully uploaded");
+        },
+        error: function () {
+            // Handle upload error
+            $("#upload-file-message").text(
+                "File not uploaded");
+        }
+    });
+} // function uploadFile
+

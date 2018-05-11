@@ -7,8 +7,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 
 @RestController
@@ -16,6 +22,7 @@ import java.security.Principal;
 public class UserController {
 
     private UserService userService;
+    private HttpServletRequest request;
 
     @GetMapping("/unauth/credentials")
     public String getCredentials() {
@@ -56,5 +63,18 @@ public class UserController {
     @GetMapping("/auth/{username}/profile")
     public ResponseEntity<User> viewOtherUserProfile(@PathVariable("username") String username) {
         return new ResponseEntity<>((User) userService.loadUserByUsername(username), HttpStatus.OK);
+    }
+
+    @PostMapping("/auth/avatar")
+    public ResponseEntity uploadAvatar(@RequestParam("uploadfile") MultipartFile avatar) {
+        String filepath = request.getServletContext().getRealPath("/");
+        System.out.println(filepath);
+        try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)))) {
+            stream.write(avatar.getBytes());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
