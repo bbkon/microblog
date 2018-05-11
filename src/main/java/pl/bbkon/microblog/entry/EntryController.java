@@ -27,8 +27,8 @@ public class EntryController {
     }
 
     @PostMapping("/auth/entry")
-    public ResponseEntity<Entry> addEntry(@RequestBody CreateEntryRequest request) {
-        return ResponseEntity.ok(entryService.add(request));
+    public ResponseEntity<Entry> addEntry(@RequestBody CreateEntryRequest request, Principal principal) {
+        return ResponseEntity.ok(entryService.add(request, principal));
     }
 
     @GetMapping("/auth/{username}/entriesNumber")

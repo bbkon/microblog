@@ -72,6 +72,6 @@ public class Entry implements Votable {
 
     @Override
     public void downvote() {
-
+        throw new UnsupportedOperationException();
     }
 }

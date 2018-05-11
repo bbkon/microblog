@@ -32,10 +32,10 @@ public class EntryService {
         return entryRepository.findAllByAuthorOrderByCreationDateDesc(user);
     }
 
-    public Entry add(CreateEntryRequest request) {
+    public Entry add(CreateEntryRequest request, Principal principal) {
         Entry entry = Entry.builder()
                 .contents(request.getContents())
-                .author((User) userService.loadUserByUsername(request.getUsername()))
+                .author((User) userService.loadUserByUsername(principal.getName()))
                 .comments(Collections.emptyList())
                 .status(Entry.Status.ORIGINAL)
                 .build();

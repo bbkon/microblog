@@ -6,6 +6,8 @@ import pl.bbkon.microblog.entry.EntryService;
 import pl.bbkon.microblog.user.User;
 import pl.bbkon.microblog.user.UserService;
 
+import java.security.Principal;
+
 @Service
 @AllArgsConstructor
 public class CommentService {
@@ -15,21 +17,18 @@ public class CommentService {
     private UserService userService;
     private EntryService entryService;
 
-    public Comment addComment(Integer entryId, CreateCommentRequest request) {
+    Comment addComment(Integer entryId, CreateCommentRequest request, Principal principal) {
         Comment comment = Comment.builder()
                 .contents(request.getContents())
-                .author((User) userService.loadUserByUsername(request.getUsername()))
+                .author((User) userService.loadUserByUsername(principal.getName()))
                 .status(Comment.Status.ORIGINAL)
                 .entry(entryService.getOne(entryId))
                 .build();
         return commentRepository.save(comment);
     }
 
-    public Integer countAllByAuthorId(Integer authorId) {
-        return commentRepository.countAllByAuthorId(authorId);
-    }
 
-    public Integer countAllByAuthorUsername(String username) {
+    Integer countAllByAuthorUsername(String username) {
         return commentRepository.countAllByAuthorUsername(username);
     }
 }
