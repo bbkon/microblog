@@ -63,9 +63,7 @@ public class UserController {
 
     @PostMapping("/auth/avatar")
     public ResponseEntity uploadAvatar(@RequestParam("uploadfile") MultipartFile avatar, Principal principal) {
-        if (userService.uploadAvatar(avatar, principal)) {
-            return new ResponseEntity(HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        userService.uploadAvatar(avatar, principal);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 }

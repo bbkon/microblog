@@ -1,12 +1,9 @@
-// var url_string = window.location.href;
-// var url = new URL(url_string);
-// var username = url.searchParams.get("user");
+var url_string = window.location.href;
+var url = new URL(url_string);
+var username = url.searchParams.get("user");
 
 
 function loadProfileData() {
-    // console.log(url_string);
-    // console.log(url);
-    // console.log(username);
     if (username == null) {
         loadSpecificProfile("/auth/profile");
     } else {
@@ -29,10 +26,12 @@ function loadSpecificProfile(getUrl) {
 }
 
 function fillUpData(user) {
+    console.log(user.responseJSON);
     $(".username").text(user.responseJSON.username);
     $(".user-description").text(user.responseJSON.description);
-    console.log(user.responseJSON);
-    $(".avatar-img").attr("src", user.responseJSON.logo);
+    if (user.responseJSON.avatar != null) {
+        $(".avatar-img").attr("src", "data:image/jpg;base64," + user.responseJSON.avatar);
+    }
     var date = new Date(user.responseJSON.creationDate);
     $(".active-since").text("since " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
     getCommentsNumberByAuthor(user.responseJSON.username).done(function (result) {

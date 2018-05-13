@@ -45,7 +45,9 @@ public class User implements UserDetails {
 
     @Size(max = 2000)
     private String description;
-    private String logo;
+
+    @Lob
+    private byte[] avatar;
 
     @Column(name = "creation_date", nullable = false, updatable = false)
     @CreationTimestamp

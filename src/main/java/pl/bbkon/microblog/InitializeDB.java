@@ -46,7 +46,6 @@ public class InitializeDB {
                 .password(encoder.encode("admin"))
                 .email("admin@admin.o2.pl")
                 .status(User.Status.ACTIVE)
-                .logo("logo")
                 .authorities(Collections.singletonList(new Role(RoleEnum.ADMIN)))
                 .description(DESCRIPTION)
                 .build();
@@ -58,7 +57,6 @@ public class InitializeDB {
                 .password(encoder.encode("password"))
                 .email("user@o2.pl")
                 .status(User.Status.ACTIVE)
-                .logo("logo")
                 .authorities(Collections.singletonList(new Role(RoleEnum.USER)))
                 .description(DESCRIPTION)
                 .build();
