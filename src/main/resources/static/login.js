@@ -42,6 +42,7 @@ $("#logout-button").click(function () {
             alert("Invalid credentials!");
         },
         error: function () {
+            window.location.href = "index.html";
             showMenuForNotLoggedIn();
         }
     });

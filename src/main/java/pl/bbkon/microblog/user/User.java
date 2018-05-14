@@ -13,6 +13,7 @@ import pl.bbkon.microblog.role.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -30,16 +31,17 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(unique = true)
+    @NotEmpty
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters long")
     private String username;
 
-    @Column(nullable = false)
     @Size(min = 4, max = 100, message = "Password must be at least 4 characters long")
+    @NotEmpty
     @JsonIgnore
     private String password;
 
-    @Column(nullable = false)
+    @NotEmpty
     @Email(message = "Incorrect email format")
     private String email;
 
