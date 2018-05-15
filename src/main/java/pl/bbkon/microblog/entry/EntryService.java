@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.bbkon.microblog.comment.Comment;
+import pl.bbkon.microblog.tags.Tag;
+import pl.bbkon.microblog.tags.TagService;
 import pl.bbkon.microblog.user.User;
 import pl.bbkon.microblog.user.UserService;
 
@@ -13,12 +15,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
 
 @Service
 @AllArgsConstructor
 public class EntryService {
     private EntryRepository entryRepository;
     private UserService userService;
+    private TagService tagService;
+
 
     public Page<Entry> findAll(Pageable pageable) {
         Page<Entry> entries = entryRepository.findAllByOrderByCreationDateDesc(pageable);
@@ -32,6 +37,10 @@ public class EntryService {
         return entryRepository.findAllByAuthorOrderByCreationDateDesc(user);
     }
 
+    public List<Entry> findAllByTag(Tag tag) {
+        return entryRepository.findByTagsIn(tag);
+    }
+
     public Entry add(CreateEntryRequest request, Principal principal) {
         Entry entry = Entry.builder()
                 .contents(request.getContents())
@@ -39,7 +48,18 @@ public class EntryService {
                 .comments(Collections.emptyList())
                 .status(Entry.Status.ORIGINAL)
                 .build();
+        assignTagsToEntry(entry);
         return entryRepository.save(entry);
+    }
+
+    private void assignTagsToEntry(Entry entry) {
+        Matcher m = Tag.PATTERN.matcher(entry.getContents());
+        while (m.find()) {
+            Tag currentTag = tagService.createTagOrReturnExisting(m.group());
+            tagService.save(currentTag);
+            entry.addTag(currentTag);
+
+        }
     }
 
     public Entry getOne(Integer id) {
@@ -58,4 +78,6 @@ public class EntryService {
         entryRepository.save(entry);
         return entry.getVotes();
     }
+
+
 }

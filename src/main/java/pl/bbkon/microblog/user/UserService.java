@@ -50,23 +50,4 @@ public class UserService implements UserDetailsService {
         repository.save(user);
 
     }
-//
-//
-//    public boolean uploadAvatar(MultipartFile avatar, Principal principal) {
-//        String filename = avatar.getOriginalFilename();
-//        String directory = "C:/Repositories/microblog/src/main/resources/static/avatars";
-//        String filepath = Paths.get(directory, filename).toString();
-//        String username = principal.getName();
-//        User user = repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-//        user.setLogo("avatars/" + filename);
-//        repository.save(user);
-//
-//        try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)))) {
-//            stream.write(avatar.getBytes());
-//        } catch (IOException e) {
-//            return false;
-//        }
-//        return true;
-//    }
-
 }

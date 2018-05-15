@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import pl.bbkon.microblog.comment.Comment;
+import pl.bbkon.microblog.tags.Tag;
 import pl.bbkon.microblog.user.User;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Entry implements Votable {
+public class Entry implements Votable, Tagable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +53,10 @@ public class Entry implements Votable {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<User> upvotingUsers = new HashSet<>();
 
+    @Builder.Default
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Tag> tags = new HashSet<>();
+
     public enum Status {
         ORIGINAL,
         EDITED
@@ -73,5 +78,10 @@ public class Entry implements Votable {
     @Override
     public void downvote() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void addTag(Tag tag) {
+        tags.add(tag);
     }
 }

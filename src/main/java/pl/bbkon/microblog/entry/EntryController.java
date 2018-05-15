@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.bbkon.microblog.tags.TagService;
 
 import java.security.Principal;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EntryController {
     private EntryService entryService;
+    private TagService tagService;
 
     @GetMapping("/unauth/entries")
     public ResponseEntity<Page<Entry>> findAll(@PageableDefault(size = 20) Pageable pageable) {
@@ -39,5 +41,11 @@ public class EntryController {
     @GetMapping("/auth/entry/{entryId}/upvote")
     public ResponseEntity<Integer> upvoteEntry(@PathVariable("entryId") Integer entryId, Principal principal) {
         return new ResponseEntity<>(entryService.upvoteEntry(entryId, principal), HttpStatus.OK);
+    }
+
+    @GetMapping("/auth/entry/tag/{tagName}")
+    public ResponseEntity<List<Entry>> getEntriesInTag(@PathVariable("tagName") String tagName) {
+        String tag = tagName.substring(1);
+        return new ResponseEntity<>(entryService.findAllByTag(tagService.createTagOrReturnExisting(tag)), HttpStatus.OK);
     }
 }
