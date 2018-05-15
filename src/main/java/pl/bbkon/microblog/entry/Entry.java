@@ -54,7 +54,8 @@ public class Entry implements Votable, Tagable {
     private Set<User> upvotingUsers = new HashSet<>();
 
     @Builder.Default
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tag_entry", joinColumns = @JoinColumn(name = "entry_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags = new HashSet<>();
 
     public enum Status {

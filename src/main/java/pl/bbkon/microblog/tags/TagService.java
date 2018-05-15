@@ -13,8 +13,4 @@ public class TagService {
         String tag = hashTag.substring(1);
         return tagRepository.findByName(hashTag).orElse(new Tag(tag));
     }
-
-    public void save(Tag tag) {
-        tagRepository.save(tag);
-    }
 }

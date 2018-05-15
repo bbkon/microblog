@@ -37,8 +37,8 @@ public class EntryService {
         return entryRepository.findAllByAuthorOrderByCreationDateDesc(user);
     }
 
-    public List<Entry> findAllByTag(Tag tag) {
-        return entryRepository.findByTagsIn(tag);
+    public Page<Entry> findAllByTag(Tag tag, Pageable pageable) {
+        return entryRepository.findByTags(tag, pageable);
     }
 
     public Entry add(CreateEntryRequest request, Principal principal) {
@@ -56,7 +56,6 @@ public class EntryService {
         Matcher m = Tag.PATTERN.matcher(entry.getContents());
         while (m.find()) {
             Tag currentTag = tagService.createTagOrReturnExisting(m.group());
-            tagService.save(currentTag);
             entry.addTag(currentTag);
 
         }

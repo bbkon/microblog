@@ -23,9 +23,15 @@ public class EntryController {
         return ResponseEntity.ok(entryService.findAll(pageable));
     }
 
-    @GetMapping("/unauth/{username}/entries")
+    @GetMapping("/unauth/entries/user/{username}")
     public ResponseEntity<List<Entry>> findAllByUser(@PathVariable("username") String username) {
         return ResponseEntity.ok(entryService.findAllByAuthor(username));
+    }
+
+    @GetMapping("/unauth/entries/tag/{tagName}")
+    public ResponseEntity<Page<Entry>> findAllByTag(@PathVariable("tagName") String tagName,
+                                                    @PageableDefault(size = 20) Pageable pageable) {
+        return new ResponseEntity<>(entryService.findAllByTag(tagService.createTagOrReturnExisting(tagName), pageable), HttpStatus.OK);
     }
 
     @PostMapping("/auth/entry")
@@ -41,11 +47,5 @@ public class EntryController {
     @GetMapping("/auth/entry/{entryId}/upvote")
     public ResponseEntity<Integer> upvoteEntry(@PathVariable("entryId") Integer entryId, Principal principal) {
         return new ResponseEntity<>(entryService.upvoteEntry(entryId, principal), HttpStatus.OK);
-    }
-
-    @GetMapping("/auth/entry/tag/{tagName}")
-    public ResponseEntity<List<Entry>> getEntriesInTag(@PathVariable("tagName") String tagName) {
-        String tag = tagName.substring(1);
-        return new ResponseEntity<>(entryService.findAllByTag(tagService.createTagOrReturnExisting(tag)), HttpStatus.OK);
     }
 }

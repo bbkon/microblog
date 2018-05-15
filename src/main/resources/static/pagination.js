@@ -45,7 +45,22 @@ function getPage(number) {
                 $row.find(".entry-details").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
                 $row.find(".entry-author").find(".user-profile-link").text(entry.authorName);
                 $row.find(".entry-author").find(".user-profile-link").attr("href", "/profile.html?user=" + entry.authorName);
-                $row.find(".entry-contents").text(entry.contents);
+                // var edited = entry.contents.replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'> $2</span>");
+                var edited = entry.contents.replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'> $2</span>");
+
+                $row.find(".entry-contents").text(edited);
+
+                // $row.find(".entry-contents").text().replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'>$2</span>");
+
+                // console.log(edited);
+
+                // string = string.replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'>$2</span>");
+
+
+                // var text = entry.contents.match("(?:(?<=\\s)|^)#(\\w*[A-Za-z_]+\\w*)");
+                // console.log(text);
+
+                // string = string.replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'>$2</span>");
 
                 $row.find(".entry-votes-number").text(entry.votes);
 
@@ -68,6 +83,7 @@ function getPage(number) {
                     $row.find(".entry-comment-template").find(".col-12").append($commentRow);
                 }
                 $(".wall").append($row);
+
                 prepareLoadMoreCommentsButton(entry.id);
                 prepareSubmitCommentButon(entry.id);
                 showNewCommentFormLink(entry.id);
