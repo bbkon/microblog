@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.bbkon.microblog.comment.Comment;
 import pl.bbkon.microblog.tags.Tag;
+import pl.bbkon.microblog.tags.TagRepository;
 import pl.bbkon.microblog.tags.TagService;
 import pl.bbkon.microblog.user.User;
 import pl.bbkon.microblog.user.UserService;
@@ -23,6 +24,7 @@ public class EntryService {
     private EntryRepository entryRepository;
     private UserService userService;
     private TagService tagService;
+    private TagRepository tagRepository;
 
 
     public Page<Entry> findAll(Pageable pageable) {
@@ -38,6 +40,7 @@ public class EntryService {
     }
 
     public Page<Entry> findAllByTag(Tag tag, Pageable pageable) {
+        Page<Entry> entries = entryRepository.findByTags(tag, pageable);
         return entryRepository.findByTags(tag, pageable);
     }
 
@@ -55,9 +58,8 @@ public class EntryService {
     private void assignTagsToEntry(Entry entry) {
         Matcher m = Tag.PATTERN.matcher(entry.getContents());
         while (m.find()) {
-            Tag currentTag = tagService.createTagOrReturnExisting(m.group());
+            Tag currentTag = tagService.createNewOrGetExisting(m.group());
             entry.addTag(currentTag);
-
         }
     }
 

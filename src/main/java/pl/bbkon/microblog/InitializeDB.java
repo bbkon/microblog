@@ -66,7 +66,7 @@ public class InitializeDB {
         List<String> entryContentsList = createListOfEntryContents();
         List<String> commentContentsList = createListOfCommentContents();
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 20; i++) {
             int num = getRandomNumber(entryContentsList.size());
             entryRepository.save(Entry.builder()
                     .author(userRepository.getOne(i % 2 + 1))
@@ -75,7 +75,7 @@ public class InitializeDB {
                     .build());
         }
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 60; i++) {
             int num = getRandomNumber(commentContentsList.size());
             commentRepository.save(Comment.builder()
                     .author(userRepository.getOne(i % 2 + 1))

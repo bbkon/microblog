@@ -1,6 +1,8 @@
 var currentPage = 0;
 var totalPages = 0;
 
+var content = "main";
+
 function fillPaginationList() {
     $.get({
         url: "/unauth/entries",
@@ -25,11 +27,15 @@ function preparePageButton($pageTemplate, i) {
     return $pageButton;
 }
 
-function getPage(number) {
+function getPage(content, number) {
     removeDisplayedContent();
-
+    if (content == "main") {
+        var getPageUrl = "/unauth/entries?page=" + number;
+    } else {
+        var getPageUrl = "/unauth/entries/tag/" + content + "?page=" + number;
+    }
     $.get({
-        url: "/unauth/entries?page=" + number,
+        url: getPageUrl,
         success: function (response) {
             var $entryTemplate = $("#entry-template");
             currentPage = number;
@@ -45,8 +51,8 @@ function getPage(number) {
                 $row.find(".entry-details").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
                 $row.find(".entry-author").find(".user-profile-link").text(entry.authorName);
                 $row.find(".entry-author").find(".user-profile-link").attr("href", "/profile.html?user=" + entry.authorName);
-                // var edited = entry.contents.replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'> $2</span>");
-                var edited = entry.contents.replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'>&nbsp;$2</span>");
+                var edited = entry.contents.replace(/(^|\s)(#[a-z\d-]+)/ig,
+                    "$1<a class='hash_tag' href='#'>&nbsp;$2</a>");
 
                 $row.find(".entry-contents").html(edited);
                 $row.find(".entry-votes-number").text(entry.votes);
@@ -95,18 +101,8 @@ function showNewCommentFormLink(entryId) {
 }
 
 $(document).on("click", ".hash_tag", function () {
-    var trimmed = $(this).text().substring(2);
-    $.get({
-        url: "/unauth/entries/tag/" + trimmed,
-        success: function (response) {
-            console.log(response);
-
-
-            // CONTINUE WORK FROM THIS PLACE
-
-
-        }
-    })
+    content = $(this).text().substring(2);
+    getPage(content, 0);
 });
 
 function prepareUpvoteEntryButton(entryId) {

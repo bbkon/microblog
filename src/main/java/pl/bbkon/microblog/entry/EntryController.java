@@ -31,7 +31,7 @@ public class EntryController {
     @GetMapping("/unauth/entries/tag/{tagName}")
     public ResponseEntity<Page<Entry>> findAllByTag(@PathVariable("tagName") String tagName,
                                                     @PageableDefault(size = 20) Pageable pageable) {
-        return new ResponseEntity<>(entryService.findAllByTag(tagService.createTagOrReturnExisting(tagName), pageable), HttpStatus.OK);
+        return new ResponseEntity<>(entryService.findAllByTag(tagService.findByName(tagName), pageable), HttpStatus.OK);
     }
 
     @PostMapping("/auth/entry")

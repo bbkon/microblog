@@ -1,6 +1,6 @@
 $(function () {
     if (currentPage == 0) {
-        getPage(0);
+        getPage(content, 0);
     }
 });
 
@@ -17,7 +17,7 @@ $("#submit-entry-button").click(function () {
         data: JSON.stringify(createEntryRequest),
         contentType: "application/json; charset=utf-8",
         success: function () {
-            getPage(0);
+            getPage(content, 0);
             $("#new-entry-form").val("");
         }
     });
