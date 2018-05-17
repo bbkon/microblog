@@ -173,7 +173,7 @@ function placePreviousButton() {
         $previousButton.addClass("btn disabled");
     } else {
         $previousButton.removeClass("btn disabled");
-        $previousButton.attr("onclick", "getPage(" + (currentPage - 1) + ")");
+        $previousButton.attr("onclick", "getPage(" + (currentPage - 1) + ", " + content + ")");
     }
 }
 
@@ -186,7 +186,7 @@ function placeNextButton() {
         $nextButton.find(".page-link").removeAttr("onclick");
     } else {
         $nextButton.find(".page-link").removeClass("btn disabled");
-        $nextButton.find(".page-link").attr("onclick", "getPage(" + (currentPage + 1) + ")");
+        $nextButton.find(".page-link").attr("onclick", "getPage(" + (currentPage + 1) + ", " + content + ")");
     }
     $(".pagination").append($nextButton);
 }

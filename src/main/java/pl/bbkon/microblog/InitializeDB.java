@@ -22,12 +22,11 @@ import java.util.Random;
 @AllArgsConstructor
 public class InitializeDB {
 
+    private static final String DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam convallis molestie augue vel porttitor. Suspendisse bibendum vel justo vel mollis. Suspendisse faucibus ex nisi, in tincidunt odio tristique vitae. Proin consequat dapibus congue. Aenean nec gravida dui. Praesent sed scelerisque risus. Suspendisse potenti. Nulla venenatis neque non lorem finibus faucibus. Sed mi sapien, elementum quis est non, viverra malesuada quam. Ut convallis ipsum eu arcu luctus egestas. Aenean eget est convallis, efficitur felis vitae, molestie ex. Mauris molestie sem ac consectetur pulvinar. Phasellus ligula est, pretium in neque et, bibendum bibendum enim. Aliquam tincidunt lacus felis, et consequat eros suscipit ac.";
     private UserRepository userRepository;
     private CommentRepository commentRepository;
     private EntryRepository entryRepository;
     private PasswordEncoder encoder;
-
-    private static final String DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam convallis molestie augue vel porttitor. Suspendisse bibendum vel justo vel mollis. Suspendisse faucibus ex nisi, in tincidunt odio tristique vitae. Proin consequat dapibus congue. Aenean nec gravida dui. Praesent sed scelerisque risus. Suspendisse potenti. Nulla venenatis neque non lorem finibus faucibus. Sed mi sapien, elementum quis est non, viverra malesuada quam. Ut convallis ipsum eu arcu luctus egestas. Aenean eget est convallis, efficitur felis vitae, molestie ex. Mauris molestie sem ac consectetur pulvinar. Phasellus ligula est, pretium in neque et, bibendum bibendum enim. Aliquam tincidunt lacus felis, et consequat eros suscipit ac.";
 
     @PostConstruct
     public void fillUpDB() {

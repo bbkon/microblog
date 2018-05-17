@@ -13,7 +13,6 @@ public class MicroblogApplication {
         SpringApplication.run(MicroblogApplication.class, args);
     }
 
-
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();

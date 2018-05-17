@@ -58,11 +58,6 @@ public class Entry implements Votable, Tagable {
     @JoinTable(name = "tag_entry", joinColumns = @JoinColumn(name = "entry_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags = new HashSet<>();
 
-    public enum Status {
-        ORIGINAL,
-        EDITED
-    }
-
     public String getAuthorName() {
         return author.getUsername();
     }
@@ -84,5 +79,10 @@ public class Entry implements Votable, Tagable {
     @Override
     public void addTag(Tag tag) {
         tags.add(tag);
+    }
+
+    public enum Status {
+        ORIGINAL,
+        EDITED
     }
 }

@@ -48,16 +48,10 @@ public class Comment implements Votable {
     @JoinColumn(name = "entry_id", nullable = false)
     @JsonIgnore
     private Entry entry;
+    private Integer votes;
 
     public String getAuthorName() {
         return author.getUsername();
-    }
-
-    private Integer votes;
-
-    public enum Status {
-        ORIGINAL,
-        EDITED
     }
 
     @Override
@@ -68,5 +62,10 @@ public class Comment implements Votable {
     @Override
     public void downvote() {
         votes--;
+    }
+
+    public enum Status {
+        ORIGINAL,
+        EDITED
     }
 }
