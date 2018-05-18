@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css"
+          integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <title>Microblog</title>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Microblog</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" id="your-profile-nav-link" href="profile.html">Your profile</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" id="register-nav-link" href="register.html">Register</a></li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item" id="login-menu-item">
+                    <form class="form-inline my-2 my-md-0">
+                        <input class="form-control" id="username" type="text" placeholder="username">
+                        <input class="form-control ml-2" id="password" type="password" placeholder="password">
+                        <input type="button" class="btn btn-secondary ml-2" id="login-button"
+                               value="Log in">
+                    </form>
+                </li>
+                <li class="nav-item" id="logout-menu-item">
+                    <span class="text-white-50 mr-3" id="user-greeting"></span>
+                    <div class="btn btn-secondary" id="logout-button">Log out</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+&nbsp;&nbsp;
+
+<div class="container">
+
+    <div class="wall-template">
+        <div class="row d-none bg-white my-2 container" id="entry-template">
+            <div class="col-1 entry-author text-primary font-weight-bold">
+                <a class="user-profile-link"></a>
+            </div>
+            <div class="col-11 entry-main-panel">
+                <div class="row entry-details small text-muted"></div>
+                <div class="row entry-contents"></div>
+
+                <div class="row entry-comment-template">
+                    <div class="col-12">
+                        <div class="row d-none comment bg-white my-2" id="comment-template">
+
+                            <div class="col-1 comment-author text-primary font-weight-bold">
+                                <a class="user-profile-link"></a>
+                            </div>
+                            <div class="col-11 comment-main-panel">
+                                <div class="row comment-details small text-muted"></div>
+                                <div class="row comment-contents"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end mx-2 additional-actions-row">
+                    <i class="fas fa-plus upvote-entry mr-1" style="color: green;"></i>
+                    <p class="entry-votes-number  mr-3">0</p>
+                    <a href="#" class="show-response-form">Respond</a>
+                </div>
+
+                <hr>
+                <div class="form-group response-div d-none">
+                    <form class="new-comment">
+                        <label><h6>Write your comment</h6></label>
+                        <textarea class="form-control comment-text" rows="3"></textarea>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary right mt-2 submit-comment-button">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                    <hr>
+                </div>
+                <div class="row more-comments-link d-none justify-content-center">
+                    <button class="btn btn-outline-primary btn-sm mb-2">Load more...</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wall">
+    </div>
+
+    <div class="pagination-div">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="#" id="previous-button" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item page-href d-none" id="page-template"><a class="page-link" href="#">1</a></li>
+            <li class="page-item next-button">
+                <a class="page-link " href="#">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script src="jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+<script src="login.js"></script>
+<script src="tag.js"></script>
+</body>
+</html>

@@ -40,8 +40,8 @@ public class EntryService {
     }
 
     public Page<Entry> findAllByTag(Tag tag, Pageable pageable) {
-        Page<Entry> entries = entryRepository.findByTags(tag, pageable);
-        return entryRepository.findByTags(tag, pageable);
+        Page<Entry> entries = entryRepository.findByTagsOrderByCreationDateDesc(tag, pageable);
+        return entryRepository.findByTagsOrderByCreationDateDesc(tag, pageable);
     }
 
     public Entry add(CreateEntryRequest request, Principal principal) {

@@ -77,12 +77,3 @@ select.error, textarea.error, input.error
     color:#
     FF0000;
 }
-
-// $('input').on('blur', function() {
-//     if ($("#registration-form").valid()) {
-//         $('#submit-button').prop('disabled', false);
-//     } else {
-//         $('#submit-button').prop('disabled', 'disabled');
-//     }
-// });
-

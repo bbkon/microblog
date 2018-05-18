@@ -1,15 +1,17 @@
 var currentPage = 0;
-var totalPages = 0;
+var totalTagPages = 0;
 
-var content = "main";
+var url_string = window.location.href;
+var url = new URL(url_string);
+var currentTag = url.searchParams.get("tag");
 
 function fillPaginationList() {
     $.get({
-        url: "/unauth/entries",
+        url: "/unauth/entries/tag/" + currentTag,
         success: function (response) {
             var $pageTemplate = $("#page-template");
-            totalPages = response.totalPages;
-            for (var i = 0; i < totalPages; i++) {
+            totalTagPages = response.totalPages;
+            for (var i = 0; i < totalTagPages; i++) {
                 var $pageButton = preparePageButton($pageTemplate, i);
                 $(".pagination").append($pageButton);
             }
@@ -29,11 +31,13 @@ function preparePageButton($pageTemplate, i) {
 
 function getPage(number) {
     removeDisplayedContent();
+    console.log(currentTag);
     $.get({
-        url: "/unauth/entries?page=" + number,
+        url: "/unauth/entries/tag/" + currentTag + "?page=" + number,
         success: function (response) {
             var $entryTemplate = $("#entry-template");
             currentPage = number;
+            console.log(response);
 
             for (var i = 0; i < response.content.length; i++) {
                 var entry = response.content[i];
@@ -96,7 +100,7 @@ function showNewCommentFormLink(entryId) {
 }
 
 $(document).on("click", ".hash_tag", function () {
-    content = $(this).text().substring(2);
+    var content = $(this).text().substring(2);
     window.location.replace("tag.html?tag=" + content + "&page=0");
 });
 
@@ -147,7 +151,6 @@ function prepareSubmitCommentButon(entryId) {
                 var commentDate = new Date(response.creationDate);
                 $commentRow.find(".comment-details").text(commentDate.toLocaleDateString() + " " + commentDate.toLocaleTimeString());
                 console.log($commentRow.find(".comment-details"));
-                // $commentRow.find(".comment-author").text(response.authorName);
                 $commentRow.find(".comment-author").find(".user-profile-link").text(response.authorName);
                 $commentRow.find(".comment-author").find(".user-profile-link").attr("href", "/profile.html?user=" + response.authorName);
 
@@ -176,7 +179,7 @@ function placePreviousButton() {
 function placeNextButton() {
     var $nextButton = $(".next-button").clone();
     $(".next-button").remove();
-    if (currentPage >= totalPages - 1) {
+    if (currentPage >= totalTagPages - 1) {
         $nextButton.find(".page-link").addClass("btn disabled");
         $nextButton.find(".page-link").removeAttr("onclick");
     } else {
@@ -192,3 +195,8 @@ function removeDisplayedContent() {
 
 fillPaginationList();
 
+$(function () {
+    if (currentPage == 0) {
+        getPage(0);
+    }
+});

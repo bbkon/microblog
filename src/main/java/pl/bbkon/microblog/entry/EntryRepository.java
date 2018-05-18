@@ -14,7 +14,7 @@ public interface EntryRepository extends JpaRepository<Entry, Integer> {
 
     Page<Entry> findAllByOrderByCreationDateDesc(Pageable pageable);
 
-    Page<Entry> findByTags(Tag tag, Pageable pageable);
+    Page<Entry> findByTagsOrderByCreationDateDesc(Tag tag, Pageable pageable);
 
     List<Entry> findAllByAuthorOrderByCreationDateDesc(User user);
 
