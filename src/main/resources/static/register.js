@@ -74,6 +74,5 @@ $(function () {
 
 select.error, textarea.error, input.error
 {
-    color:#
-    FF0000;
+    color: '#FF0000';
 }
