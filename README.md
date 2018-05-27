@@ -1,5 +1,5 @@
 ﻿# microblog
-Microblog is an application by developing which I intended to improve my programming skills.
+Microblog is a REST API application by developing which I intended to improve my programming skills.
 
 ## What's inside 
 This project is based on Spring Boot and uses:
