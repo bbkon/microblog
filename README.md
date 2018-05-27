@@ -10,7 +10,7 @@ This project is based on Spring Boot and uses:
 * Bootstrap 4.0
 
 ## Functionality
-At the moment of creating this readme file only basic CRUD operations have been implemented:
+Basic microblog operations are implemented:
 * register new user (all the entered data is validated, passwords are encrypted)
 * create new entry (only for logged-in users)
 * comment an entry (logged-in)
@@ -37,5 +37,8 @@ spring.datasource.password=password
 ## Usage 
 Run the project and head out to [http://localhost:8080](http://localhost:8080)
 
+## Preview
+<br><br>
 ![screenshot_1](microblog1.jpg)
+<br><br>
 ![screenshot_2](microblog2.jpg)
